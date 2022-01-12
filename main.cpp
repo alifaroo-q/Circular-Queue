@@ -3,7 +3,7 @@
 class Node {
 public:
     int data;
-    Node* next;
+    Node *next;
 
     Node(int data) {
         this->data = data;
@@ -12,8 +12,8 @@ public:
 
 };
 
-Node* front = nullptr;
-Node* rear = nullptr;
+Node *front = nullptr;
+Node *rear = nullptr;
 
 bool isEmpty();
 void enqueue(int);
@@ -22,10 +22,12 @@ void display();
 
 int main() {
 
-    enqueue(20);
-    enqueue(30);
-    enqueue(42);
-    enqueue(12);
+    enqueue(14);
+    enqueue(22);
+    enqueue(13);
+    enqueue(-6);
+    dequeue();
+    dequeue();
 
     display();
 
@@ -37,7 +39,7 @@ bool isEmpty() {
 }
 
 void enqueue(int data) {
-    Node* newNode = new Node(data);
+    Node *newNode = new Node(data);
     if (isEmpty()) {
         front = newNode;
         newNode->next = front;
@@ -49,8 +51,26 @@ void enqueue(int data) {
     rear = newNode;
 }
 
+void dequeue() {
+    if (isEmpty()) {
+        std::cout << "Can't dequeue. Queue is empty\n";
+        return;
+    }
+    if (front == rear) {
+        delete front;
+        front = nullptr;
+        rear = nullptr;
+        return;
+    }
+    Node *temp = front;
+    front = front->next;
+    rear->next = front;
+    delete temp;
+}
+
 void display() {
-    Node* current = front;
+    Node *current = front;
+    if (current == nullptr) return;
     do {
         std::cout << current->data << " ";
         current = current->next;
